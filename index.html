@@ -63,24 +63,13 @@
   .band-teal { background: #1C5A5F; }
   /* Flat teal against the textured oxblood — the cards cover the pattern
      anyway, so leaving it on only showed it in the outer margins. */
-  .band.band-teal::before, .band.band-teal::after { content: none; }
+  .band.band-teal::before { content: none; }
   .band::before {
     content: "";
     position: absolute;
     inset: 0;
     background: url(assets/pattern-tile-light.svg) center/120px 120px repeat;
     opacity: 0.09;
-    pointer-events: none;
-  }
-  .band::after {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: 172px;
-    height: 172px;
-    background: url(assets/corner-light.svg) center/contain no-repeat;
-    opacity: 0.26;
     pointer-events: none;
   }
   .band-inner { position: relative; max-width: 1040px; margin: 0 auto; padding: 76px 28px 80px; }
@@ -276,7 +265,6 @@
         <sc-if value="{{ rsvpSent }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top: 56px; position: relative; overflow: hidden; background: #4A0F14; padding: 60px 40px 64px; text-align: center;">
             <div style="position: absolute; inset: 0; background: url(assets/pattern-tile-light.svg) center/120px 120px repeat; opacity: 0.09; pointer-events: none;"></div>
-            <div style="position: absolute; bottom: -16px; right: -16px; width: 176px; height: 176px; background: url(assets/corner-light.svg) center/contain no-repeat; opacity: 0.26; transform: rotate(180deg); pointer-events: none;"></div>
             <div style="position: relative; width: 112px; aspect-ratio: 1; margin: 0 auto; background: url(assets/flourish-light.svg) center/contain no-repeat;"></div>
             <div style="position: relative; margin-top: 24px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 36px; color: #F4F5F0;">{{ rsvpThanks }}</div>
             <p style="position: relative; margin: 14px 0 0; font-size: 17px; color: #C1B0AE;">Your reply has been recorded. <a href="#rsvp" onClick="{{ resetRsvp }}" style="color: #F4F5F0; border-bottom: 1px solid rgba(244,245,240,0.45);">Send another</a></p>
