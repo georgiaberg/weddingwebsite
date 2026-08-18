@@ -1,1 +1,714 @@
-<p>site<p\>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F4F5F0; color: #2A3A33; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #1C5A5F; text-decoration: none; }
+  a:hover { color: #4A0F14; }
+
+  /* ---------------------------------------------------------------
+     Geometric background.
+     pattern-tile.svg is a true unit cell: every element that leaves
+     one edge is stamped again on the opposite edge, so `repeat` has
+     no seam at any offset. The drift travels exactly two cells
+     (240px = 2 x 120px), so the loop point is invisible too.
+     A radial mask keeps the pattern at the edges of the viewport and
+     out from under the text column.
+  --------------------------------------------------------------- */
+  .pattern-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url(assets/pattern-tile.svg);
+    background-repeat: repeat;
+    background-size: 120px 120px;
+    opacity: 0.15;
+    -webkit-mask-image: radial-gradient(ellipse 74% 62% at 50% 46%, rgba(0,0,0,0) 34%, rgba(0,0,0,1) 100%);
+    mask-image: radial-gradient(ellipse 74% 62% at 50% 46%, rgba(0,0,0,0) 34%, rgba(0,0,0,1) 100%);
+    animation: drift 320s linear infinite;
+  }
+  @keyframes drift { from { background-position: 0 0; } to { background-position: 240px 240px; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  /* ---------------------------------------------------------------
+     Navigation.
+     Hover is scoped to real pointer devices so a tap on a phone does
+     not leave the link stuck in its hover state — which is what made
+     the old nav look like it never de-selected. The hover underline
+     is also a different colour from the active one, so even a stuck
+     hover can never be mistaken for the current page.
+  --------------------------------------------------------------- */
+  /* ---------------------------------------------------------------
+     Value rhythm.
+     The page alternates bone grounds with full-bleed oxblood blocks so
+     each section arrives with weight instead of drifting past. Oxblood
+     carries the structure (section openers, the countdown, the closing
+     appeals); teal stays a secondary dark for the schedule; sage stays
+     linework. The seamless tile reappears inside the dark blocks in
+     cream ink, so the pattern reads as one material across both values.
+  --------------------------------------------------------------- */
+  .band { position: relative; overflow: hidden; background: #4A0F14; }
+  .band-teal { background: #1C5A5F; }
+  /* Flat teal against the textured oxblood — the cards cover the pattern
+     anyway, so leaving it on only showed it in the outer margins. */
+  .band.band-teal::before, .band.band-teal::after { content: none; }
+  .band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url(assets/pattern-tile-light.svg) center/120px 120px repeat;
+    opacity: 0.09;
+    pointer-events: none;
+  }
+  .band::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 172px;
+    height: 172px;
+    background: url(assets/corner-light.svg) center/contain no-repeat;
+    opacity: 0.26;
+    pointer-events: none;
+  }
+  .band-inner { position: relative; max-width: 1040px; margin: 0 auto; padding: 76px 28px 80px; }
+  .band-eyebrow { font-size: 21px; color: #C1B0AE; direction: rtl; }
+  .band-title {
+    margin: 12px 0 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(36px, 8vw, 58px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #F4F5F0;
+  }
+  .band-lede {
+    margin: 22px auto 0;
+    max-width: 56ch;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #C1B0AE;
+    text-wrap: pretty;
+  }
+
+  .btn-cream, .btn-outline-cream {
+    padding: 17px 40px;
+    font-size: 13px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .btn-cream { background: #F4F5F0; color: #4A0F14; }
+  .btn-outline-cream { border: 1px solid rgba(244,245,240,0.55); color: #F4F5F0; }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-cream:hover { background: #C1B0AE; color: #4A0F14; }
+    .btn-outline-cream:hover { background: rgba(244,245,240,0.12); color: #F4F5F0; }
+  }
+  .btn-cream:focus-visible, .btn-outline-cream:focus-visible {
+    outline: 2px solid #F4F5F0; outline-offset: 3px;
+  }
+
+  .nav-link { text-decoration: none; }
+  .nav-link:focus-visible { outline: 2px solid #1C5A5F; outline-offset: 4px; }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover { color: #4A0F14 !important; border-bottom-color: #D1D7CE !important; }
+    .nav-link.is-active:hover { border-bottom-color: #83967D !important; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; display: flex; flex-direction: column; font-family: Jost, system-ui, sans-serif; position: relative;">
+
+  <div class="pattern-layer"></div>
+
+  <header style="position: relative; z-index: 2; background: rgba(244,245,240,0.92); backdrop-filter: blur(6px); border-bottom: 1px solid #D1D7CE;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 18px 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;">
+      <a href="#home" onClick="{{ goHome }}" style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; letter-spacing: 0.22em; color: #1C5A5F; text-transform: uppercase;">G &amp; P</a>
+      <nav style="display: flex; flex-wrap: wrap; gap: 4px;">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
+          <a href="{{ item.href }}" onClick="{{ item.onClick }}" class="{{ item.cls }}" aria-current="{{ item.current }}" style="{{ item.style }}">{{ item.label }}</a>
+        </sc-for>
+      </nav>
+    </div>
+  </header>
+
+  <main style="position: relative; z-index: 1; flex: 1;">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Home">
+        <div style="max-width: 1120px; margin: 0 auto; padding: 64px 28px 76px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="width: min(460px, 78vw); aspect-ratio: 1; background: url(assets/medallion.svg) center/contain no-repeat;"></div>
+          <div data-reveal style="margin-top: 8px; font-size: 13px; letter-spacing: 0.34em; text-transform: uppercase; color: #83967D; line-height: 2.1;">
+            Friday, the twenty third of April, two thousand twenty seven<br>
+            Four o&rsquo;clock in the afternoon &nbsp;&middot;&nbsp; The Paradise Banquet Hall, Vaughan
+          </div>
+        </div>
+
+        <div class="band">
+          <div class="band-inner" style="text-align: center; padding-top: 68px; padding-bottom: 72px;">
+            <sc-if value="{{ countdownOn }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; justify-content: center; border-top: 1px solid rgba(244,245,240,0.24); border-bottom: 1px solid rgba(244,245,240,0.24); border-right: 1px solid rgba(244,245,240,0.24); max-width: 460px; margin: 0 auto;">
+                <sc-for list="{{ countdown }}" as="cell" hint-placeholder-count="3">
+                  <div style="padding: 26px 20px; min-width: 92px; flex: 1; border-left: 1px solid rgba(244,245,240,0.24);">
+                    <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(40px, 11vw, 56px); line-height: 1; color: #F4F5F0; font-weight: 300;">{{ cell.value }}</div>
+                    <div style="margin-top: 10px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C1B0AE;">{{ cell.label }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <div style="margin-top: 46px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;">
+              <a href="#rsvp" onClick="{{ goRsvp }}" class="btn-cream">RSVP</a>
+              <a href="#registry" onClick="{{ goRegistry }}" class="btn-outline-cream">Registry</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; padding: 76px 28px 88px;">
+          <div data-reveal style="width: min(520px, 100%); aspect-ratio: 640 / 56; background: url(assets/divider.svg) center/contain no-repeat;"></div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isStory }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Our Story">
+        <div class="band">
+          <div class="band-inner" style="text-align: center;">
+            <div class="band-eyebrow">چیرۆکی ئێمە</div>
+            <h1 class="band-title">Our Story</h1>
+          </div>
+        </div>
+        <div data-reveal style="max-width: 1000px; margin: 0 auto; padding: 76px 28px 96px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: start;">
+          <div style="{{ portraitStyle }}">
+            <span style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #83967D;">portrait of georgia &amp; parsa</span>
+          </div>
+          <div>
+            <p style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 27px; line-height: 1.55; font-weight: 300; text-wrap: pretty;">Parsa and I met in the fall of 2021 in Waterloo.</p>
+            <p style="margin: 26px 0 0; font-size: 18px; line-height: 1.85; color: #3C4A43; text-wrap: pretty;">Our first date was in a lecture hall on the fourth floor of the Mathematics and Computing building. We wanted to see <em>The Rocky Horror Picture Show</em> at the Princess, but every ticket was sold out — so we dressed up anyway and watched it together where we were.</p>
+            <p style="margin: 22px 0 0; font-size: 18px; line-height: 1.85; color: #3C4A43; text-wrap: pretty;">We have been inseparable ever since. Six years later we would love you with us in Vaughan, for a Kurdish-Canadian evening of dinner, dancing and far too many photographs.</p>
+            <div style="margin-top: 34px; width: 116px; aspect-ratio: 1; background: url(assets/flourish.svg) left center/contain no-repeat;"></div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isDetails }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="The Day">
+        <div class="band">
+          <div class="band-inner" style="text-align: center;">
+            <div class="band-eyebrow">ڕۆژی ئاهەنگ</div>
+            <h1 class="band-title">The Day</h1>
+          </div>
+        </div>
+
+        <div class="band band-teal">
+          <div class="band-inner" style="padding-top: 0; padding-bottom: 0; max-width: 1080px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: rgba(244,245,240,0.22);">
+              <sc-for list="{{ schedule }}" as="row" hint-placeholder-count="3">
+                <div style="background: #1C5A5F; padding: 52px 30px 56px;">
+                  <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 46px; font-weight: 300; color: #F4F5F0; line-height: 1;">{{ row.time }}</div>
+                  <div style="margin-top: 14px; font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #A9C0B5;">{{ row.label }}</div>
+                  <div style="margin-top: 12px; font-size: 17px; line-height: 1.7; color: #D6E0DA;">{{ row.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal style="max-width: 1000px; margin: 0 auto; padding: 76px 28px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px;">
+          <div>
+            <h2 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: #4A0F14;">Dress code</h2>
+            <p style="margin: 18px 0 0; font-size: 18px; line-height: 1.8; color: #3C4A43; text-wrap: pretty;">Formal. Long dresses, suits and traditional Kurdish dress are all very welcome. The ceremony and reception are both indoors, and there will be dancing — comfortable shoes are wiser than they look.</p>
+            <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.7; color: #83967D; font-style: italic;">Please leave white and cream to Georgia.</p>
+          </div>
+          <div>
+            <h2 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: #4A0F14;">Getting there</h2>
+            <p style="margin: 18px 0 0; font-size: 18px; line-height: 1.8; color: #3C4A43;">The Paradise Banquet Hall<br>7601 Jane Street, Vaughan, Ontario</p>
+            <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.8; color: #3C4A43;">Free parking on site. <a href="https://maps.google.com/?q=7601+Jane+Street+Vaughan+Ontario" target="_blank" rel="noopener" style="border-bottom: 1px solid #D1D7CE;">Open in Google Maps</a></p>
+          </div>
+        </div>
+
+        <div data-reveal style="max-width: 1000px; margin: 0 auto; padding: 76px 28px 96px;">
+          <div style="text-align: center;">
+            <div style="font-size: 20px; color: #83967D; direction: rtl;">پرسیارەکان</div>
+            <h2 style="margin: 8px 0 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: 38px; letter-spacing: 0.12em; text-transform: uppercase; color: #4A0F14;">Questions</h2>
+          </div>
+          <div style="margin-top: 36px; border-top: 1px solid #D1D7CE;">
+            <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+              <div style="border-bottom: 1px solid #D1D7CE; padding: 26px 4px;">
+                <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; color: #4A0F14;">{{ f.q }}</div>
+                <div style="margin-top: 10px; font-size: 17px; line-height: 1.8; color: #3C4A43; max-width: 70ch; text-wrap: pretty;">{{ f.a }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isRsvp }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="RSVP">
+        <div class="band">
+          <div class="band-inner" style="text-align: center;">
+            <div class="band-eyebrow">وەڵامدانەوە</div>
+            <h1 class="band-title">RSVP</h1>
+            <p class="band-lede">Kindly reply by the first of March, 2027.</p>
+          </div>
+        </div>
+        <div style="max-width: 760px; margin: 0 auto; padding: 0 28px 96px;">
+
+        <sc-if value="{{ rsvpSent }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 56px; position: relative; overflow: hidden; background: #4A0F14; padding: 60px 40px 64px; text-align: center;">
+            <div style="position: absolute; inset: 0; background: url(assets/pattern-tile-light.svg) center/120px 120px repeat; opacity: 0.09; pointer-events: none;"></div>
+            <div style="position: absolute; bottom: -16px; right: -16px; width: 176px; height: 176px; background: url(assets/corner-light.svg) center/contain no-repeat; opacity: 0.26; transform: rotate(180deg); pointer-events: none;"></div>
+            <div style="position: relative; width: 112px; aspect-ratio: 1; margin: 0 auto; background: url(assets/flourish-light.svg) center/contain no-repeat;"></div>
+            <div style="position: relative; margin-top: 24px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 36px; color: #F4F5F0;">{{ rsvpThanks }}</div>
+            <p style="position: relative; margin: 14px 0 0; font-size: 17px; color: #C1B0AE;">Your reply has been recorded. <a href="#rsvp" onClick="{{ resetRsvp }}" style="color: #F4F5F0; border-bottom: 1px solid rgba(244,245,240,0.45);">Send another</a></p>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ rsvpOpen }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitRsvp }}" style="margin-top: 56px; display: flex; flex-direction: column; gap: 30px;">
+            <label style="display: flex; flex-direction: column; gap: 9px;">
+              <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">Full name</span>
+              <input name="name" required style="font-family: Jost, sans-serif; font-size: 18px; padding: 14px 16px; min-height: 48px; border: 1px solid #D1D7CE; background: #FCFCFA; color: #2A3A33;" style-focus="border-color: #1C5A5F; outline: none;">
+            </label>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">Will you be joining us?</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                <label style="flex: 1; min-width: 200px; display: flex; align-items: center; gap: 12px; padding: 16px 20px; border: 1px solid #D1D7CE; background: #FCFCFA; font-size: 17px; min-height: 48px; cursor: pointer;" style-hover="border-color: #1C5A5F;">
+                  <input type="radio" name="attending" value="Joyfully accepts" required style="accent-color: #1C5A5F; width: 18px; height: 18px;">
+                  <span>Joyfully accepts</span>
+                </label>
+                <label style="flex: 1; min-width: 200px; display: flex; align-items: center; gap: 12px; padding: 16px 20px; border: 1px solid #D1D7CE; background: #FCFCFA; font-size: 17px; min-height: 48px; cursor: pointer;" style-hover="border-color: #1C5A5F;">
+                  <input type="radio" name="attending" value="Regretfully declines" style="accent-color: #1C5A5F; width: 18px; height: 18px;">
+                  <span>Regretfully declines</span>
+                </label>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px;">
+              <label style="display: flex; flex-direction: column; gap: 9px;">
+                <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">Guests in your party</span>
+                <input name="guests" type="number" min="1" max="8" defaultValue="1" style="font-family: Jost, sans-serif; font-size: 18px; padding: 14px 16px; min-height: 48px; border: 1px solid #D1D7CE; background: #FCFCFA; color: #2A3A33;" style-focus="border-color: #1C5A5F; outline: none;">
+              </label>
+              <label style="display: flex; flex-direction: column; gap: 9px;">
+                <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">Email</span>
+                <input name="email" type="email" required style="font-family: Jost, sans-serif; font-size: 18px; padding: 14px 16px; min-height: 48px; border: 1px solid #D1D7CE; background: #FCFCFA; color: #2A3A33;" style-focus="border-color: #1C5A5F; outline: none;">
+              </label>
+            </div>
+
+            <label style="display: flex; flex-direction: column; gap: 9px;">
+              <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">Dietary restrictions</span>
+              <input name="dietary" placeholder="Allergies, halal, vegetarian&hellip;" style="font-family: Jost, sans-serif; font-size: 18px; padding: 14px 16px; min-height: 48px; border: 1px solid #D1D7CE; background: #FCFCFA; color: #2A3A33;" style-focus="border-color: #1C5A5F; outline: none;">
+            </label>
+
+            <label style="display: flex; flex-direction: column; gap: 9px;">
+              <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">A song that will get you dancing</span>
+              <input name="song" style="font-family: Jost, sans-serif; font-size: 18px; padding: 14px 16px; min-height: 48px; border: 1px solid #D1D7CE; background: #FCFCFA; color: #2A3A33;" style-focus="border-color: #1C5A5F; outline: none;">
+            </label>
+
+            <label style="display: flex; flex-direction: column; gap: 9px;">
+              <span style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">A note for Georgia &amp; Parsa</span>
+              <textarea name="note" rows="4" style="font-family: Jost, sans-serif; font-size: 18px; padding: 14px 16px; border: 1px solid #D1D7CE; background: #FCFCFA; color: #2A3A33; resize: vertical;" style-focus="border-color: #1C5A5F; outline: none;"></textarea>
+            </label>
+
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px;">
+              <button type="submit" style="padding: 18px 46px; background: #1C5A5F; color: #F4F5F0; border: none; font-family: Jost, sans-serif; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; min-height: 48px; cursor: pointer;" style-hover="background: #4A0F14;">{{ rsvpButton }}</button>
+              <span style="font-size: 15px; color: #4A0F14;">{{ rsvpError }}</span>
+            </div>
+            <div style="font-family: ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.7; color: #83967D;">{{ rsvpConfigNote }}</div>
+          </form>
+        </sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isRegistry }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Registry">
+        <div class="band">
+          <div class="band-inner" style="text-align: center;">
+            <div class="band-eyebrow">دیاری</div>
+            <h1 class="band-title">Registry</h1>
+            <p class="band-lede">Your presence is the gift. If you would like to mark the day with something more, here are three ways — all equally welcome.</p>
+          </div>
+        </div>
+
+        <div data-reveal style="max-width: 1040px; margin: 0 auto; padding: 76px 28px 0;">
+          <h2 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: #4A0F14;">Honeymoon fund</h2>
+          <div style="margin-top: 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+            <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+              <div style="background: #FCFCFA; border: 1px solid #D1D7CE; border-top: 3px solid #4A0F14; padding: 32px 26px; display: flex; flex-direction: column; gap: 12px;">
+                <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 40px; font-weight: 300; color: #1C5A5F; line-height: 1;">{{ t.amount }}</div>
+                <div style="font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase; color: #83967D;">{{ t.name }}</div>
+                <div style="font-size: 17px; line-height: 1.7; color: #3C4A43; flex: 1;">{{ t.note }}</div>
+                <a href="{{ t.href }}" target="_blank" rel="noopener" style="margin-top: 8px; align-self: flex-start; padding: 14px 28px; border: 1px solid #1C5A5F; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; min-height: 44px; display: inline-flex; align-items: center;" style-hover="background: #1C5A5F; color: #F4F5F0;">Contribute</a>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div data-reveal style="max-width: 1040px; margin: 0 auto; padding: 72px 28px 84px;">
+          <h2 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: #4A0F14;">Gift list</h2>
+          <p style="margin: 12px 0 0; font-size: 17px; color: #83967D;">Claiming a gift simply lets everyone else know it is taken.</p>
+          <div style="margin-top: 26px; border-top: 1px solid #D1D7CE;">
+            <sc-for list="{{ gifts }}" as="g" hint-placeholder-count="6">
+              <div style="border-bottom: 1px solid #D1D7CE; padding: 24px 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px;">
+                <div style="flex: 1; min-width: 220px;">
+                  <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 25px; color: #2A3A33;">{{ g.name }}</div>
+                  <div style="margin-top: 4px; font-size: 16px; color: #83967D;">{{ g.detail }}</div>
+                </div>
+                <div style="font-size: 17px; color: #3C4A43; min-width: 90px;">{{ g.price }}</div>
+                <button onClick="{{ g.onClaim }}" disabled="{{ g.claimed }}" style="{{ g.buttonStyle }}">{{ g.buttonLabel }}</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="band">
+          <div class="band-inner" style="padding-top: 68px; padding-bottom: 74px;">
+            <div style="max-width: 62ch;">
+              <div style="width: 92px; aspect-ratio: 1; margin-left: -4px; background: url(assets/flourish-light.svg) left center/contain no-repeat;"></div>
+              <h2 style="margin: 18px 0 0; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: 0.1em; text-transform: uppercase; color: #F4F5F0;">In lieu of gifts</h2>
+              <p style="margin: 16px 0 0; font-size: 18px; line-height: 1.8; color: #C1B0AE; text-wrap: pretty;">A donation in our name to a cause close to our families means a great deal to us. We have chosen two: one supporting Kurdish families resettling in Canada, and one local food bank in the region.</p>
+              <div style="margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px;">
+                <a href="{{ charityOneHref }}" target="_blank" rel="noopener" class="btn-cream" style="padding: 15px 30px; font-size: 12px; letter-spacing: 0.24em; min-height: 44px;">Kurdish Family Fund</a>
+                <a href="{{ charityTwoHref }}" target="_blank" rel="noopener" class="btn-outline-cream" style="padding: 15px 30px; font-size: 12px; letter-spacing: 0.24em; min-height: 44px;">Regional Food Bank</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Gallery">
+        <div class="band">
+          <div class="band-inner" style="text-align: center;">
+            <div class="band-eyebrow">وێنەکان</div>
+            <h1 class="band-title">Gallery</h1>
+            <p class="band-lede">Photographs from the day, shared by you. No account, no app — add a caption and it appears here.</p>
+            <a href="{{ uploadHref }}" target="_blank" rel="noopener" class="btn-cream" style="margin-top: 30px;">Add your photos</a>
+          </div>
+        </div>
+
+        <div data-reveal style="max-width: 1120px; margin: 0 auto; padding: 76px 28px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px;">
+          <sc-for list="{{ photos }}" as="p" hint-placeholder-count="6">
+            <figure style="margin: 0;">
+              <div style="{{ p.tileStyle }}"></div>
+              <figcaption style="margin-top: 10px; font-size: 16px; line-height: 1.6; color: #3C4A43;">
+                {{ p.caption }}
+                <span style="display: block; margin-top: 3px; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: #83967D;">{{ p.credit }}</span>
+              </figcaption>
+            </figure>
+          </sc-for>
+        </div>
+        <div style="max-width: 1120px; margin: 0 auto; padding: 34px 28px 96px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.7; color: #83967D;">{{ galleryConfigNote }}</div>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <footer class="band" style="z-index: 1; border-top: 1px solid rgba(244,245,240,0.22);">
+    <div class="band-inner" style="max-width: 1120px; padding: 62px 28px 68px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center;">
+      <div style="width: min(540px, 100%); aspect-ratio: 640 / 56; background: url(assets/divider-light.svg) center/contain no-repeat;"></div>
+      <div style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; letter-spacing: 0.2em; text-transform: uppercase; color: #F4F5F0;">Georgia &amp; Parsa</div>
+      <div style="font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #C1B0AE;">23 . 04 . 2027 &nbsp;&middot;&nbsp; Vaughan, Ontario</div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;appsScriptUrl&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Connections&quot; },
+  &quot;airtableFormUrl&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Connections&quot; },
+  &quot;galleryFeedUrl&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Connections&quot; },
+  &quot;donationUrl&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Connections&quot; },
+  &quot;motionLevel&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;fades + drift&quot;, &quot;none&quot;], &quot;default&quot;: &quot;fades + drift&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Feel&quot; },
+  &quot;showCountdown&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Feel&quot; }
+}">
+class Component extends DCLogic {
+  state = { page: "home", now: Date.now(), rsvp: "idle", rsvpError: "", rsvpName: "", claimed: {}, photos: null };
+
+  pages = [
+    { id: "home", label: "Home" },
+    { id: "story", label: "Our Story" },
+    { id: "details", label: "The Day" },
+    { id: "rsvp", label: "RSVP" },
+    { id: "registry", label: "Registry" },
+    { id: "gallery", label: "Gallery" }
+  ];
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
+    this.syncHash();
+    this.onHash = () => this.syncHash();
+    window.addEventListener("hashchange", this.onHash);
+    this.lastPage = this.state.page;
+    this.reveal();
+    this.loadGallery();
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    window.removeEventListener("hashchange", this.onHash);
+    if (this.io) this.io.disconnect();
+  }
+  // The runtime calls componentDidUpdate(prevProps) with a single argument —
+  // there is no prevState. The original `componentDidUpdate(_, prev)` therefore
+  // threw on every single update, so the reveal animations were never re-armed
+  // after the first page and elements could be left stranded at opacity 0.
+  componentDidUpdate() {
+    if (this.lastPage !== this.state.page) {
+      this.lastPage = this.state.page;
+      this.reveal();
+    }
+  }
+
+  syncHash() {
+    const id = (location.hash || "").replace("#", "");
+    if (this.pages.some(p => p.id === id) && id !== this.state.page) this.setState({ page: id });
+  }
+
+  motion() {
+    const level = this.props.motionLevel || "fades + drift";
+    if (level === "none") return false;
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  reveal() {
+    requestAnimationFrame(() => {
+      // React reuses DOM nodes between pages, so a node can arrive on a new
+      // page still carrying the inline opacity/animation from the last one.
+      // Reset every candidate each time rather than tracking a "revealed"
+      // flag on the element, which is what previously let sections get
+      // stuck invisible after navigating.
+      if (this.io) { this.io.disconnect(); this.io = null; }
+      const els = document.querySelectorAll("[data-reveal]");
+      if (!this.motion()) {
+        els.forEach(el => { el.style.animation = ""; el.style.opacity = ""; });
+        return;
+      }
+      this.io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.style.animation = "fadeUp 900ms cubic-bezier(.2,.7,.2,1) both";
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.08, rootMargin: "0px 0px -6% 0px" });
+      els.forEach(el => {
+        el.style.animation = "none";
+        el.style.opacity = "0";
+        this.io.observe(el);
+      });
+    });
+  }
+
+  go(id) {
+    return e => {
+      if (e) e.preventDefault();
+      // Drop focus so the tapped link does not keep a focus ring or a
+      // lingering pressed appearance once the new page has rendered.
+      if (e && e.currentTarget && e.currentTarget.blur) e.currentTarget.blur();
+      if (location.hash !== "#" + id) history.pushState(null, "", "#" + id);
+      this.setState({ page: id });
+      window.scrollTo({ top: 0, behavior: this.motion() ? "smooth" : "auto" });
+    };
+  }
+
+  countdownCells() {
+    const target = new Date("2027-04-23T16:00:00-04:00").getTime();
+    let ms = Math.max(0, target - this.state.now);
+    const days = Math.floor(ms / 86400000);
+    const hours = Math.floor((ms % 86400000) / 3600000);
+    const mins = Math.floor((ms % 3600000) / 60000);
+    return [
+      { value: String(days), label: days === 1 ? "day" : "days" },
+      { value: String(hours), label: "hours" },
+      { value: String(mins), label: "minutes" }
+    ];
+  }
+
+  async submitRsvp(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form).entries());
+    const url = (this.props.appsScriptUrl || "").trim();
+    this.setState({ rsvp: "sending", rsvpError: "", rsvpName: (data.name || "").split(" ")[0] });
+    if (!url) {
+      console.log("[RSVP demo payload]", data);
+      setTimeout(() => this.setState({ rsvp: "sent" }), 500);
+      return;
+    }
+    try {
+      await fetch(url, { method: "POST", mode: "no-cors", body: new URLSearchParams({ ...data, submittedAt: new Date().toISOString() }) });
+      this.setState({ rsvp: "sent" });
+    } catch (err) {
+      this.setState({ rsvp: "idle", rsvpError: "Something went wrong — please try again, or email us." });
+    }
+  }
+
+  claim(gift) {
+    return async () => {
+      this.setState(s => ({ claimed: { ...s.claimed, [gift.id]: true } }));
+      const url = (this.props.appsScriptUrl || "").trim();
+      if (!url) { console.log("[Claim demo payload]", gift.id); return; }
+      try {
+        await fetch(url, { method: "POST", mode: "no-cors", body: new URLSearchParams({ type: "claim", gift: gift.name, at: new Date().toISOString() }) });
+      } catch (err) { /* optimistic */ }
+    };
+  }
+
+  async loadGallery() {
+    const feed = (this.props.galleryFeedUrl || "").trim();
+    if (!feed) return;
+    try {
+      const res = await fetch(feed);
+      const json = await res.json();
+      const rows = Array.isArray(json) ? json : (json.records || []);
+      const photos = rows.map(r => {
+        const f = r.fields || r;
+        const att = f.Photo || f.photo || [];
+        return { url: (Array.isArray(att) ? (att[0] || {}).url : att) || "", caption: f.Caption || f.caption || "", credit: f.Name || f.name || "" };
+      }).filter(p => p.url);
+      if (photos.length) this.setState({ photos });
+    } catch (err) { console.warn("Gallery feed unavailable", err); }
+  }
+
+  // Empty photo/portrait slots get a flat tint with one faint centred
+  // ornament. Using the repeating background tile here made the slots
+  // blend straight into the page pattern behind them, so the grid read
+  // as a single continuous field rather than as distinct frames.
+  emptySlot(ornament) {
+    return "background-color: #EDEFE8;" +
+      " background-image: linear-gradient(rgba(237,239,232,0.70), rgba(237,239,232,0.70)), url(assets/flourish.svg);" +
+      " background-size: auto, " + ornament + "px " + ornament + "px;" +
+      " background-repeat: repeat, no-repeat;" +
+      " background-position: center, center;";
+  }
+
+  renderVals() {
+    const { page } = this.state;
+
+    // Every branch below writes the SAME set of longhand properties.
+    // Adding `border-bottom-color` only on the active item made the
+    // renderer clear it back to `currentColor` (not `transparent`) when
+    // the item went inactive, which left a permanent underline on every
+    // page the guest had already visited.
+    const navStyle = active =>
+      "padding: 12px 15px; font-size: 12px; letter-spacing: 0.2em;" +
+      " text-transform: uppercase; min-height: 44px; display: inline-flex;" +
+      " align-items: center; border-bottom-width: 2px; border-bottom-style: solid;" +
+      " transition: color 200ms ease, border-bottom-color 200ms ease;" +
+      " color: " + (active ? "#4A0F14" : "#1C5A5F") + ";" +
+      " border-bottom-color: " + (active ? "#83967D" : "transparent") + ";";
+
+    const navItems = this.pages.map(p => {
+      const active = p.id === page;
+      return {
+        label: p.label,
+        href: "#" + p.id,
+        onClick: this.go(p.id),
+        cls: active ? "nav-link is-active" : "nav-link",
+        current: active ? "page" : undefined,
+        style: navStyle(active)
+      };
+    });
+
+    const giftData = [
+      { id: "kettle", name: "Stovetop tea kettle", detail: "For chai after every dinner", price: "$90" },
+      { id: "linens", name: "Linen bedding set", detail: "Queen, in oatmeal", price: "$210" },
+      { id: "castiron", name: "Cast iron pan, 12\"", detail: "The one thing we keep borrowing", price: "$120" },
+      { id: "rug", name: "Kurdish kilim runner", detail: "For the hallway", price: "$340" },
+      { id: "glasses", name: "Set of six tea glasses", detail: "Estikan, gold rim", price: "$60" },
+      { id: "camera", name: "Film for the disposable cameras", detail: "Genuinely useful", price: "$25" }
+    ];
+    const gifts = giftData.map(g => {
+      const claimed = !!this.state.claimed[g.id];
+      return {
+        ...g,
+        claimed,
+        onClaim: claimed ? undefined : this.claim(g),
+        buttonLabel: claimed ? "Claimed" : "Claim",
+        buttonStyle: "padding: 13px 26px; font-family: Jost, sans-serif; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; min-height: 44px; cursor: " + (claimed ? "default" : "pointer") + "; border: 1px solid " + (claimed ? "#D1D7CE" : "#4A0F14") + "; background: " + (claimed ? "#E8EAE3" : "transparent") + "; color: " + (claimed ? "#83967D" : "#4A0F14") + ";"
+      };
+    });
+
+    const tileFrame = "aspect-ratio: 4/3; border: 1px solid #D1D7CE;";
+    const emptyTile = tileFrame + this.emptySlot(76);
+    const placeholderPhotos = [
+      "the first dance", "grandparents, table four", "the ceremony", "cutting the cake", "cousins on the dance floor", "the last song"
+    ].map(c => ({ caption: c, credit: "guest photo", tileStyle: emptyTile }));
+    const photos = (this.state.photos || placeholderPhotos).map(p => ({
+      caption: p.caption || "",
+      credit: p.url && p.credit ? "shared by " + p.credit : (p.credit || "guest photo"),
+      tileStyle: p.url
+        ? tileFrame + " background-color: #EEF0E9; background-image: url(" + p.url + "); background-size: cover; background-repeat: no-repeat; background-position: center;"
+        : (p.tileStyle || emptyTile)
+    }));
+
+    const donateBase = (this.props.donationUrl || "#").trim() || "#";
+
+    return {
+      navItems,
+      isHome: page === "home", isStory: page === "story", isDetails: page === "details",
+      isRsvp: page === "rsvp", isRegistry: page === "registry", isGallery: page === "gallery",
+      goHome: this.go("home"), goRsvp: this.go("rsvp"), goRegistry: this.go("registry"),
+      countdownOn: this.props.showCountdown !== false,
+      countdown: this.countdownCells(),
+      portraitStyle: "aspect-ratio: 4/5; border: 1px solid #D1D7CE; display: flex; align-items: flex-end; padding: 16px;" + this.emptySlot(112),
+      schedule: [
+        { time: "3:30", label: "Doors open", note: "Come early, find your seat, say hello to people you have not seen in years." },
+        { time: "4:00", label: "Ceremony", note: "Please be seated by ten to four — the doors close as we begin." },
+        { time: "6:00", label: "Dinner", note: "Dinner, speeches, and dancing until the hall turns the lights on." }
+      ],
+      faqs: [
+        { q: "Can I bring my children?", a: "Yes. Children are very welcome — please include them in your guest count so we can seat and feed them properly." },
+        { q: "Is there parking?", a: "Yes, free parking on site at the hall, with accessible spaces near the main entrance." },
+        { q: "Will the food be halal?", a: "Yes. The entire dinner is halal, and there are vegetarian and gluten-free options — tell us in your RSVP." },
+        { q: "Is the venue accessible?", a: "The ceremony and reception are on one level, step-free from the parking lot, with accessible washrooms." },
+        { q: "When should I reply?", a: "By the first of March, 2027. After that we have to give the hall final numbers." },
+        { q: "Can I take photos?", a: "Please do — during the reception. We ask for phones away during the ceremony itself, then share everything you take in the gallery." }
+      ],
+      tiers: [
+        { amount: "$50", name: "A long dinner", note: "One evening of somewhere we have never eaten before.", href: donateBase },
+        { amount: "$150", name: "A night away", note: "Toward a room with a view for the two of us.", href: donateBase },
+        { amount: "Any amount", name: "Your choosing", note: "Anything at all, and our thanks with it.", href: donateBase }
+      ],
+      gifts,
+      charityOneHref: donateBase,
+      charityTwoHref: donateBase,
+      rsvpOpen: this.state.rsvp !== "sent",
+      rsvpSent: this.state.rsvp === "sent",
+      rsvpThanks: this.state.rsvpName ? "Thank you, " + this.state.rsvpName + "." : "Thank you.",
+      rsvpButton: this.state.rsvp === "sending" ? "Sending\u2026" : "Send our reply",
+      rsvpError: this.state.rsvpError,
+      submitRsvp: e => this.submitRsvp(e),
+      resetRsvp: e => { e.preventDefault(); this.setState({ rsvp: "idle", rsvpName: "" }); },
+      rsvpConfigNote: (this.props.appsScriptUrl || "").trim() ? "" : "demo mode \u2014 replies are logged to the browser console. paste your apps script web-app url into the appsScriptUrl tweak to go live.",
+      galleryConfigNote: (this.props.galleryFeedUrl || "").trim() ? "" : "demo mode \u2014 showing placeholders. set airtableFormUrl (guest uploads) and galleryFeedUrl (a proxy that returns airtable records as json) in the tweaks.",
+      uploadHref: (this.props.airtableFormUrl || "").trim() || "#",
+      photos
+    };
+  }
+}
+
+</script>
+</body>
+</html>

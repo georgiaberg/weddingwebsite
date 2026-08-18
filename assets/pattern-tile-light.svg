@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <title>Seamless geometric tile</title>
+  <defs>
+    <g id="m">
+    <line x1="8.910" y1="8.910" x2="51.090" y2="51.090" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="12.021" y1="47.979" x2="47.979" y2="12.021" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="12.021" y1="72.021" x2="47.979" y2="107.979" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="8.910" y1="111.090" x2="51.090" y2="68.910" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="72.021" y1="12.021" x2="107.979" y2="47.979" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="68.910" y1="51.090" x2="111.090" y2="8.910" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="68.910" y1="68.910" x2="111.090" y2="111.090" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <line x1="72.021" y1="107.979" x2="107.979" y2="72.021" stroke="#C1B0AE" stroke-width="0.9" stroke-linecap="round"/>
+    <path d="M 30.000 24.800 L 35.200 30.000 L 30.000 35.200 L 24.800 30.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.0" stroke-linejoin="miter"/>
+    <path d="M 30.000 84.800 L 35.200 90.000 L 30.000 95.200 L 24.800 90.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.0" stroke-linejoin="miter"/>
+    <path d="M 90.000 24.800 L 95.200 30.000 L 90.000 35.200 L 84.800 30.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.0" stroke-linejoin="miter"/>
+    <path d="M 90.000 84.800 L 95.200 90.000 L 90.000 95.200 L 84.800 90.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.0" stroke-linejoin="miter"/>
+    <path d="M 19.401 8.036 L 8.036 8.036 L 8.036 19.401 L 0.000 11.365 L -8.036 19.401 L -8.036 8.036 L -19.401 8.036 L -11.365 0.000 L -19.401 -8.036 L -8.036 -8.036 L -8.036 -19.401 L -0.000 -11.365 L 8.036 -19.401 L 8.036 -8.036 L 19.401 -8.036 L 11.365 -0.000 Z" fill="none" stroke="#F4F5F0" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M 8.149 3.375 L 3.375 8.149 L -3.375 8.149 L -8.149 3.375 L -8.149 -3.375 L -3.375 -8.149 L 3.375 -8.149 L 8.149 -3.375 Z" fill="none" stroke="#F4F5F0" stroke-width="1.0" stroke-linejoin="round"/>
+    <path d="M 19.401 128.036 L 8.036 128.036 L 8.036 139.401 L 0.000 131.365 L -8.036 139.401 L -8.036 128.036 L -19.401 128.036 L -11.365 120.000 L -19.401 111.964 L -8.036 111.964 L -8.036 100.599 L -0.000 108.635 L 8.036 100.599 L 8.036 111.964 L 19.401 111.964 L 11.365 120.000 Z" fill="none" stroke="#F4F5F0" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M 8.149 123.375 L 3.375 128.149 L -3.375 128.149 L -8.149 123.375 L -8.149 116.625 L -3.375 111.851 L 3.375 111.851 L 8.149 116.625 Z" fill="none" stroke="#F4F5F0" stroke-width="1.0" stroke-linejoin="round"/>
+    <path d="M 79.401 68.036 L 68.036 68.036 L 68.036 79.401 L 60.000 71.365 L 51.964 79.401 L 51.964 68.036 L 40.599 68.036 L 48.635 60.000 L 40.599 51.964 L 51.964 51.964 L 51.964 40.599 L 60.000 48.635 L 68.036 40.599 L 68.036 51.964 L 79.401 51.964 L 71.365 60.000 Z" fill="none" stroke="#F4F5F0" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M 68.149 63.375 L 63.375 68.149 L 56.625 68.149 L 51.851 63.375 L 51.851 56.625 L 56.625 51.851 L 63.375 51.851 L 68.149 56.625 Z" fill="none" stroke="#F4F5F0" stroke-width="1.0" stroke-linejoin="round"/>
+    <path d="M 139.401 8.036 L 128.036 8.036 L 128.036 19.401 L 120.000 11.365 L 111.964 19.401 L 111.964 8.036 L 100.599 8.036 L 108.635 0.000 L 100.599 -8.036 L 111.964 -8.036 L 111.964 -19.401 L 120.000 -11.365 L 128.036 -19.401 L 128.036 -8.036 L 139.401 -8.036 L 131.365 -0.000 Z" fill="none" stroke="#F4F5F0" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M 128.149 3.375 L 123.375 8.149 L 116.625 8.149 L 111.851 3.375 L 111.851 -3.375 L 116.625 -8.149 L 123.375 -8.149 L 128.149 -3.375 Z" fill="none" stroke="#F4F5F0" stroke-width="1.0" stroke-linejoin="round"/>
+    <path d="M 139.401 128.036 L 128.036 128.036 L 128.036 139.401 L 120.000 131.365 L 111.964 139.401 L 111.964 128.036 L 100.599 128.036 L 108.635 120.000 L 100.599 111.964 L 111.964 111.964 L 111.964 100.599 L 120.000 108.635 L 128.036 100.599 L 128.036 111.964 L 139.401 111.964 L 131.365 120.000 Z" fill="none" stroke="#F4F5F0" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M 128.149 123.375 L 123.375 128.149 L 116.625 128.149 L 111.851 123.375 L 111.851 116.625 L 116.625 111.851 L 123.375 111.851 L 128.149 116.625 Z" fill="none" stroke="#F4F5F0" stroke-width="1.0" stroke-linejoin="round"/>
+    <path d="M 1.400 60.000 A 7.600 7.600 0 1 1 16.600 60.000 A 7.600 7.600 0 1 1 1.400 60.000 Z M -7.600 69.000 A 7.600 7.600 0 1 1 7.600 69.000 A 7.600 7.600 0 1 1 -7.600 69.000 Z M -16.600 60.000 A 7.600 7.600 0 1 1 -1.400 60.000 A 7.600 7.600 0 1 1 -16.600 60.000 Z M -7.600 51.000 A 7.600 7.600 0 1 1 7.600 51.000 A 7.600 7.600 0 1 1 -7.600 51.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.3"/>
+    <circle cx="0.000" cy="60.000" r="2.6" fill="none" stroke="#C1B0AE" stroke-width="1.0"/>
+    <path d="M 61.400 0.000 A 7.600 7.600 0 1 1 76.600 0.000 A 7.600 7.600 0 1 1 61.400 0.000 Z M 52.400 9.000 A 7.600 7.600 0 1 1 67.600 9.000 A 7.600 7.600 0 1 1 52.400 9.000 Z M 43.400 0.000 A 7.600 7.600 0 1 1 58.600 0.000 A 7.600 7.600 0 1 1 43.400 0.000 Z M 52.400 -9.000 A 7.600 7.600 0 1 1 67.600 -9.000 A 7.600 7.600 0 1 1 52.400 -9.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.3"/>
+    <circle cx="60.000" cy="0.000" r="2.6" fill="none" stroke="#C1B0AE" stroke-width="1.0"/>
+    <path d="M 61.400 120.000 A 7.600 7.600 0 1 1 76.600 120.000 A 7.600 7.600 0 1 1 61.400 120.000 Z M 52.400 129.000 A 7.600 7.600 0 1 1 67.600 129.000 A 7.600 7.600 0 1 1 52.400 129.000 Z M 43.400 120.000 A 7.600 7.600 0 1 1 58.600 120.000 A 7.600 7.600 0 1 1 43.400 120.000 Z M 52.400 111.000 A 7.600 7.600 0 1 1 67.600 111.000 A 7.600 7.600 0 1 1 52.400 111.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.3"/>
+    <circle cx="60.000" cy="120.000" r="2.6" fill="none" stroke="#C1B0AE" stroke-width="1.0"/>
+    <path d="M 121.400 60.000 A 7.600 7.600 0 1 1 136.600 60.000 A 7.600 7.600 0 1 1 121.400 60.000 Z M 112.400 69.000 A 7.600 7.600 0 1 1 127.600 69.000 A 7.600 7.600 0 1 1 112.400 69.000 Z M 103.400 60.000 A 7.600 7.600 0 1 1 118.600 60.000 A 7.600 7.600 0 1 1 103.400 60.000 Z M 112.400 51.000 A 7.600 7.600 0 1 1 127.600 51.000 A 7.600 7.600 0 1 1 112.400 51.000 Z" fill="none" stroke="#C1B0AE" stroke-width="1.3"/>
+    <circle cx="120.000" cy="60.000" r="2.6" fill="none" stroke="#C1B0AE" stroke-width="1.0"/>
+    </g>
+  </defs>
+  <use href="#m" x="-120" y="-120"/>
+  <use href="#m" x="-120" y="0"/>
+  <use href="#m" x="-120" y="120"/>
+  <use href="#m" x="0" y="-120"/>
+  <use href="#m" x="0" y="0"/>
+  <use href="#m" x="0" y="120"/>
+  <use href="#m" x="120" y="-120"/>
+  <use href="#m" x="120" y="0"/>
+  <use href="#m" x="120" y="120"/>
+</svg>
